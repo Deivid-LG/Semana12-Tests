@@ -58,9 +58,41 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
 
     }
+    //Deivid Laura
+    @Test
+    public void testFindAllOwners() throws Exception {
+
+        //int NRO_RECORD = 73;
+        int ID_FIRST_RECORD = 1;
+
+        this.mockMvc.perform(get("/owners"))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                //		    .andExpect(jsonPath("$", hasSize(NRO_RECORD)))
+                .andExpect(jsonPath("$[0].id", is(ID_FIRST_RECORD)));
+    }
+
+    /**
+     *
+     * @throws Exception
+     *
+     */
+    @Test
+    public void testFindOwnerOK() throws Exception {
+
+        String FIRST_NAME = "George";
+        String LAST_NAME = "Basil";
+        String ADDRESS = "Calle 1";
+        String CITY = "Santo Domingo";
+        String TELEPHONE = "123456789";
+
+        mockMvc.perform(get("/owners/1"))  // Object must be BASIL
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.firstName", is(FIRST_NAME)));
+    }
 
 }
-/**
- *
- * @throws Exception
- */
